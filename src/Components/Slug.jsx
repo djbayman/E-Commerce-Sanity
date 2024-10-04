@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { urlFor } from "../lib/client";
 import { useStateContext } from "../Context/StateContext";
 
 const Slug = ({ product }) => {
-  // const [qnt, setQnt] = useState(1);
   const { incQnt, decQnt, qnt, onAdd } = useStateContext();
 
   return (

@@ -2,8 +2,11 @@ import { useStateContext } from "../Context/StateContext";
 import CartItem from "./CartItem";
 
 const CartSection = () => {
-  const { showCartSection, cartItems, totalPrice, totalQnt } =
-    useStateContext();
+  const { showCartSection } = useStateContext();
+
+  const localProducts = JSON.parse(window.localStorage.getItem("products"));
+  const localTotalPrice = window.localStorage.getItem("total-price");
+  const localTotalQnt = window.localStorage.getItem("total-qnt");
 
   return (
     <div style={{ transition: "all 5s" }}>
@@ -29,22 +32,25 @@ const CartSection = () => {
               />
             </svg>
           </span>
-          Your Cart <span className="text-base text-red-600">{totalQnt}</span>
+          Your Cart{" "}
+          <span className="text-base text-red-600">{`(${
+            localTotalQnt || 0
+          })`}</span>
         </h1>
         <div
           className="flex flex-col justify-between "
           style={{ height: "calc(100vh - 8vh)" }}
         >
           <div>
-            {cartItems &&
-              cartItems.map((cartInfo, ind) => (
+            {localProducts &&
+              localProducts.map((cartInfo, ind) => (
                 <CartItem key={ind} cartInfo={cartInfo} />
               ))}
           </div>
           <div>
             <div className="flex items-center justify-between text-xl font-semibold text-[#088178]">
               <h2>Subtotal:</h2>
-              <span>${totalPrice}</span>
+              <span>${localTotalPrice || 0}</span>
             </div>
             <button className="block w-1/2 mx-auto my-3 py-3 bg-red-600 text-white font-semibold rounded-md">
               Pay With Stripe

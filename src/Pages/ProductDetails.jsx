@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import MayLike from "../Components/MayLike";
 import Slug from "../Components/Slug";
 import { useParams } from "react-router-dom";
-import client from "../lib/client";
 import SlugLoader from "../Components/SlugLoader";
 import useSanity from "../hooks/useSanity";
 
@@ -21,7 +20,7 @@ const ProductDetails = () => {
 
   return (
     <div className="w-11/12 mx-auto">
-      <Slug product={slugData && slugData[0]} />
+      <Slug product={slugData.length && slugData[0]} />
       <MayLike allProducts={productData && productData} />
     </div>
   );

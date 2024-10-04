@@ -14,7 +14,6 @@ function App() {
     <div className="App">
       <Navbar />
       {showCart && <CartSection />}
-      {/* <Cart /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/:slug" element={<ProductDetails />} />

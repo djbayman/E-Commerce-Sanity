@@ -49,32 +49,6 @@ const useSanity = () => {
     }
   }, []);
 
-  // const fetchData = useCallback(async () => {
-  //   try {
-  //     setLoading(true);
-  //     const fetchBannarData = await client
-  //       .fetch('*[_type == "banner"]')
-  //       .then((res) => setBannerData(res));
-  //     //
-  //     const fetchProductData = await client
-  //       .fetch('*[_type == "product"]')
-  //       .then((res) => setProductData(res));
-  //     //
-  //     const fetchSlugData = await client
-  //       .fetch(`*[_type == "product" && slug.current == '${slug}']`)
-  //       .then((res) => setSlugData(res));
-  //     return { fetchBannarData, fetchProductData, fetchSlugData };
-  //   } catch {
-  //     throw new Error("there is Error");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [slug]);
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [fetchData]);
-
   return {
     fetchBannarData,
     fetchProductsData,

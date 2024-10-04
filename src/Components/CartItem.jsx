@@ -5,6 +5,7 @@ import { useStateContext } from "../Context/StateContext";
 const CartItem = ({ cartInfo }) => {
   const { onRemove, setTotalPrice, setTotalQnt } = useStateContext();
   const [qntCart, setQntCart] = useState(cartInfo.quantity);
+  const localProducts = JSON.parse(window.localStorage.getItem("products"));
 
   useEffect(() => {
     setQntCart(cartInfo.quantity);
@@ -15,8 +16,26 @@ const CartItem = ({ cartInfo }) => {
   const incCRPRQnt = () => {
     setQntCart((prev) => prev + 1);
     cartInfo.quantity = cartInfo.quantity + 1;
-    setTotalQnt((prevQ) => prevQ + 1);
-    setTotalPrice((prevP) => prevP + cartInfo.price);
+    setTotalQnt((prevQ) => {
+      window.localStorage.setItem("total-qnt", prevQ + 1);
+      return prevQ + 1;
+    });
+    setTotalPrice((prevP) => {
+      window.localStorage.setItem("total-price", prevP + cartInfo.price);
+      return prevP + cartInfo.price;
+    });
+    const updateCartItems = localProducts.map((product) => {
+      if (product._id === cartInfo._id) {
+        return {
+          ...product,
+          quantity: product.quantity + 1,
+        };
+      } else {
+        return product;
+      }
+    });
+
+    window.localStorage.setItem("products", JSON.stringify(updateCartItems));
   };
 
   const decCRPRQnt = () => {
@@ -26,8 +45,26 @@ const CartItem = ({ cartInfo }) => {
     } else {
       setQntCart((prev) => prev - 1);
       cartInfo.quantity -= 1;
-      setTotalQnt((prevQ) => prevQ - 1);
-      setTotalPrice((prevP) => prevP - cartInfo.price);
+      setTotalQnt((prevQ) => {
+        window.localStorage.setItem("total-qnt", prevQ - 1);
+        return prevQ - 1;
+      });
+      setTotalPrice((prevP) => {
+        window.localStorage.setItem("total-price", prevP - cartInfo.price);
+        return prevP - cartInfo.price;
+      });
+      const updateCartItems = localProducts.map((product) => {
+        if (product._id === cartInfo._id) {
+          return {
+            ...product,
+            quantity: product.quantity - 1,
+          };
+        } else {
+          return product;
+        }
+      });
+
+      window.localStorage.setItem("products", JSON.stringify(updateCartItems));
     }
   };
 

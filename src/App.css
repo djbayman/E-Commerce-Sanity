@@ -19,14 +19,33 @@ body {
   z-index: 1;
 }
 
-@keyframes move {
-  0% {
-    transform: translateX(0%);
+@keyframes slide {
+  from {
+    transform: translateX(0);
   }
-  50% {
+  to {
     transform: translateX(-100%);
   }
-  100% {
-    transform: translateX(0%);
-  }
+}
+
+.slide-container:hover .img-slide {
+  animation-play-state: paused;
+}
+.slide-container:before,
+.slide-container:after {
+  position: absolute;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  content: "";
+  z-index: 2;
+}
+.slide-container:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+}
+
+.slide-container:after {
+  right: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
 }

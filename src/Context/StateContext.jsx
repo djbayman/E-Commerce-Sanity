@@ -30,15 +30,21 @@ const StateContext = ({ children }) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
     );
-    setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
-    );
-    setTotalQnt((prevTotalQnt) => prevTotalQnt + quantity);
+    setTotalPrice((prevTotalPrice) => {
+      window.localStorage.setItem(
+        "total-price",
+        prevTotalPrice + product.price * quantity
+      );
+      return prevTotalPrice + product.price * quantity;
+    });
+    setTotalQnt((prevTotalQnt) => {
+      window.localStorage.setItem("total-qnt", prevTotalQnt + quantity);
+      return prevTotalQnt + quantity;
+    });
 
     if (checkProductInCart) {
       const updateCartItems = cartItems.map((cartProduct) => {
         if (cartProduct._id === product._id) {
-          // console.log(cartProduct);
           return {
             ...cartProduct,
             quantity: cartProduct.quantity + quantity,
@@ -49,9 +55,14 @@ const StateContext = ({ children }) => {
       });
 
       setCartItems(updateCartItems);
+      window.localStorage.setItem("products", JSON.stringify(updateCartItems));
     } else {
       product.quantity = quantity;
       setCartItems([...cartItems, product]);
+      window.localStorage.setItem(
+        "products",
+        JSON.stringify([...cartItems, product])
+      );
     }
     toast.success(`${quantity} ${product.name} has add to the cart`);
   };
@@ -62,8 +73,26 @@ const StateContext = ({ children }) => {
         (item) => item._id !== product._id
       );
       setCartItems(deletedProduct);
-      setTotalQnt((prevQnt) => prevQnt - product.quantity);
-      setTotalPrice((prevP) => prevP - product.price * product.quantity);
+      setTotalQnt((prevQnt) => {
+        if (cartItems.length > 1) {
+          window.localStorage.setItem("total-qnt", prevQnt - product.quantity);
+        } else {
+          window.localStorage.removeItem("total-qnt");
+        }
+        return prevQnt - product.quantity;
+      });
+      setTotalPrice((prevP) => {
+        if (cartItems.length > 1) {
+          window.localStorage.setItem(
+            "total-price",
+            prevP - product.price * product.quantity
+          );
+        } else {
+          window.localStorage.removeItem("total-price");
+        }
+        return prevP - product.price * product.quantity;
+      });
+      window.localStorage.setItem("products", JSON.stringify(deletedProduct));
     }
   };
 
