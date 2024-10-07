@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import ProductDetails from "./Pages/ProductDetails";
 import { useStateContext } from "./Context/StateContext";
 import CartSection from "./Components/CartSection";
+import OnSuccess from "./Pages/OnSuccess";
+import OnCancel from "./Pages/OnCancel";
 
 function App() {
   const { showCart } = useStateContext();
@@ -15,7 +17,10 @@ function App() {
       {showCart && <CartSection />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:slug" element={<ProductDetails />} />
+        <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route path="/success" element={<OnSuccess />} />
+        <Route path="/cancel" element={<OnCancel />} />
+        <Route path="/*" element={<OnCancel />} />
       </Routes>
       <Footer />
     </div>

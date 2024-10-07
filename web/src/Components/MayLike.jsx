@@ -22,7 +22,7 @@ const MayLike = ({ allProducts }) => {
                   className={`box w-1/5 h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer mx-6
                       `}
                 >
-                  <Link to={`/${product.slug.current}`}>
+                  <Link to={`/product/${product.slug.current}`}>
                     <img
                       src={urlFor(product.image[0].asset._ref)}
                       className="h-3/4 w-full rounded-t-lg"
@@ -52,7 +52,7 @@ const MayLike = ({ allProducts }) => {
                   className={`box w-1/5 h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer mx-6
                       `}
                 >
-                  <Link to={`/${product.slug.current}`}>
+                  <Link to={`/product/${product.slug.current}`}>
                     <img
                       src={urlFor(product.image[0].asset._ref)}
                       className="h-3/4 w-full rounded-t-lg"

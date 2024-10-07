@@ -22,7 +22,7 @@ const Products = ({ productData }) => {
                   
                   `}
             >
-              <Link to={`/${box.slug.current}`}>
+              <Link to={`/product/${box.slug.current}`}>
                 <img
                   src={urlFor(box.image[0].asset._ref)}
                   className="h-3/4 w-full rounded-t-lg"

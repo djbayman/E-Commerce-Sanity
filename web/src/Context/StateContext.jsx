@@ -115,6 +115,7 @@ const StateContext = ({ children }) => {
         setQnt,
         setTotalPrice,
         setTotalQnt,
+        setCartItems,
         incQnt,
         decQnt,
         onAdd,
