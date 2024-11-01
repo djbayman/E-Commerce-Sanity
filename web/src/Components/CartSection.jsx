@@ -9,7 +9,9 @@ const CartSection = () => {
   const localTotalPrice = window.localStorage.getItem("total-price");
   const localTotalQnt = window.localStorage.getItem("total-qnt");
 
+  // click on the pay button and it will direct you to the stripe session
   const handleCheckout = async () => {
+    // public stripe key
     const stripe = await loadStripe(
       `pk_test_51Q6HbuP0AY2wiLcKI5jwLwuxH37FopYYKeqhCo4q5wX7d1z1yRgg97Xd3yd7a8xuV74KJffKwCiqf1sfmMfergOg007wamTMS1`
     );
@@ -25,19 +27,21 @@ const CartSection = () => {
     );
 
     const session = await response.json();
-
     stripe.redirectToCheckout({ sessionId: session.id });
   };
 
   return (
     <div style={{ transition: "all 5s" }}>
       <div
-        className={` bg-regal-blue top-0 right-0 h-screen z-30 transition-transform fixed px-4 overflow-auto ${
-          showCartSection ? "w-2/5" : "w-0"
+        className={` bg-regal-blue bottom-0 md:top-0 right-0 md:h-screen w-full z-30 transition-transform fixed px-4 overflow-auto ${
+          showCartSection ? "md:w-2/5 h-1/2" : "md:w-0"
         }`}
       >
         <h1 className=" font-semibold mt-6 flex items-center gap-3">
-          <span onClick={showCartSection} className="cursor-pointer">
+          <span
+            onClick={showCartSection}
+            className="cursor-pointer -rotate-90 md:rotate-0"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -58,10 +62,7 @@ const CartSection = () => {
             localTotalQnt || 0
           })`}</span>
         </h1>
-        <div
-          className="flex flex-col justify-between "
-          style={{ height: "calc(100vh - 8vh)" }}
-        >
+        <div className="cart-pr-cont flex flex-col justify-between ">
           <div>
             {localProducts &&
               localProducts.map((cartInfo, ind) => (
@@ -83,8 +84,8 @@ const CartSection = () => {
         </div>
       </div>
       <div
-        className={`overlay  bg-black/65 top-0 left-0 h-screen z-30 fixed ${
-          showCartSection ? "w-3/5" : "w-0"
+        className={`overlay  bg-black/65 top-0 left-0 w-full md:h-screen z-30 fixed ${
+          showCartSection ? "md:w-3/5 h-1/2" : "w-0"
         }`}
         onClick={showCartSection}
       ></div>

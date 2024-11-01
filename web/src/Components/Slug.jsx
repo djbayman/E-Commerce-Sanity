@@ -2,22 +2,27 @@ import { urlFor } from "../lib/client";
 import { useStateContext } from "../Context/StateContext";
 
 const Slug = ({ product }) => {
-  const { incQnt, decQnt, qnt, onAdd } = useStateContext();
+  const { incQnt, decQnt, qnt, onAdd, setShowCart } = useStateContext();
+  // click on Buy now it add it to the cart and open the cart sidebar
+  const handleBuyItNow = () => {
+    onAdd(product, qnt);
+    setShowCart(true);
+  };
 
   return (
-    <div className="flex items-start gap-10 my-20 ">
+    <div className="flex flex-col md:flex-row md:items-start gap-10 my-20 ">
       {product && (
         <div className="">
           <img
             src={urlFor(product.image[0].asset._ref)}
-            className="w-96 h-96 rounded-lg"
+            className=" w-full h-80 md:w-96 md:h-96 rounded-lg"
             alt=""
           />
         </div>
       )}
-      <div className="w-1/2 flex flex-col gap-3">
+      <div className="md:w-1/2 flex flex-col gap-3">
         <h1 className="text-2xl font-semibold text-[#088178]">
-          {product.name}
+          {product?.name}
         </h1>
         <div className="flex items-center gap-1 ">
           <svg
@@ -84,9 +89,9 @@ const Slug = ({ product }) => {
           </svg>
         </div>
         <span className="font-semibold text-lg text-[#088178]">Details:</span>
-        <p className="text-gray-600 ">{product.details}</p>
+        <p className="text-gray-600 ">{product?.details}</p>
         <span className="text-2xl font-bold text-[#088178]">
-          ${product.price}
+          ${product?.price}
         </span>
         <div className="flex items-center gap-4">
           <h3 className="text-lg font-semibold text-[#088178]">Quantity: </h3>
@@ -133,14 +138,17 @@ const Slug = ({ product }) => {
             </span>
           </p>
         </div>
-        <div className="flex items-center gap-5 mt-6">
+        <div className=" flex items-center gap-5 mt-6">
           <button
-            className="w-52 py-3 font-semibold text-[#088178] border-2 border-[#088178] transition-transform hover:scale-110 rounded-md"
+            className="w-1/2 md:w-52 py-3 font-semibold text-[#088178] border-2 border-[#088178] transition-transform hover:scale-110 rounded-md"
             onClick={() => onAdd(product, qnt)}
           >
             Add to cart
           </button>
-          <button className="w-52 py-3 font-semibold text-white bg-[#088178] border-2 border-[#088178] transition-transform hover:scale-110 rounded-md">
+          <button
+            className="w-1/2 md:w-52 py-3 font-semibold text-white bg-[#088178] border-2 border-[#088178] transition-transform hover:scale-110 rounded-md"
+            onClick={handleBuyItNow}
+          >
             Buy now
           </button>
         </div>

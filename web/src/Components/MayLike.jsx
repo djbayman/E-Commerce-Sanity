@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom";
 import { urlFor } from "../lib/client";
 
-const MayLike = ({ allProducts }) => {
+const MayLike = ({ simillareProducts }) => {
   return (
     <div className="my-10">
       <h2 className="text-center text-4xl text-[#088178] font-bold">
         You may also Like
       </h2>
-      <div className="slide-container relative overflow-hidden whitespace-nowrap">
+      <div
+        className={`slide-container relative overflow-hidden whitespace-nowrap  mx-auto`}
+        style={{ width: `${simillareProducts.length}1rem` }}
+      >
         <div
-          className="inline-block  "
+          className="inline-block w-full mx-2"
           style={{
             animation: "30s slide infinite linear",
           }}
         >
-          <div className="flex items-center  mt-10 ">
-            {allProducts &&
-              allProducts.slice(0, 5).map((product, ind) => (
+          <div className="flex items-center gap-2 mt-10 ">
+            {simillareProducts &&
+              simillareProducts.map((product, ind) => (
                 <div
                   key={ind}
-                  className={`box w-1/5 h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer mx-6
+                  className={`box h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer w-[10rem]
                       `}
                 >
                   <Link to={`/product/${product.slug.current}`}>
@@ -39,17 +42,17 @@ const MayLike = ({ allProducts }) => {
           </div>
         </div>
         <div
-          className="inline-block"
+          className="inline-block w-full mx-2"
           style={{
             animation: "30s slide infinite linear",
           }}
         >
-          <div className="flex items-center  mt-10 ">
-            {allProducts &&
-              allProducts.slice(0, 5).map((product, ind) => (
+          <div className="flex items-center gap-2 mt-10 ">
+            {simillareProducts &&
+              simillareProducts.map((product, ind) => (
                 <div
                   key={ind}
-                  className={`box w-1/5 h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer mx-6
+                  className={`box h-64 bg-regal-blue rounded-lg hover:scale-105 transition-transform cursor-pointer w-[10rem]
                       `}
                 >
                   <Link to={`/product/${product.slug.current}`}>

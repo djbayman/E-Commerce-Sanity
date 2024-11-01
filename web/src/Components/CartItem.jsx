@@ -1,69 +1,8 @@
-import { useEffect, useState } from "react";
 import { urlFor } from "../lib/client";
 import { useStateContext } from "../Context/StateContext";
 
 const CartItem = ({ cartInfo }) => {
-  const { onRemove, setTotalPrice, setTotalQnt, qnt } = useStateContext();
-
-  const localProducts = JSON.parse(window.localStorage.getItem("products"));
-  const localTotalPrice = window.localStorage.getItem("total-price");
-  const localTotalQnt = window.localStorage.getItem("total-qnt");
-
-  const incCRPRQnt = () => {
-    setTotalQnt((prevQ) => {
-      window.localStorage.setItem("total-qnt", Number(localTotalQnt) + 1);
-      return prevQ + 1;
-    });
-    setTotalPrice((prevP) => {
-      window.localStorage.setItem(
-        "total-price",
-        Number(localTotalPrice) + cartInfo.price
-      );
-      return prevP + cartInfo.price;
-    });
-
-    const updateCartItems = localProducts.map((product) => {
-      if (product._id === cartInfo._id) {
-        return {
-          ...product,
-          quantity: product.quantity + 1,
-        };
-      }
-      return product;
-    });
-
-    window.localStorage.setItem("products", JSON.stringify(updateCartItems));
-  };
-
-  const decCRPRQnt = () => {
-    if (cartInfo.quantity - 1 < 1) {
-      cartInfo.quantity = 1;
-    } else {
-      setTotalQnt((prevQ) => {
-        window.localStorage.setItem("total-qnt", Number(localTotalQnt) - 1);
-        return prevQ - 1;
-      });
-      setTotalPrice((prevP) => {
-        window.localStorage.setItem(
-          "total-price",
-          Number(localTotalPrice) - cartInfo.price
-        );
-        return prevP - cartInfo.price;
-      });
-      //
-      const updateCartItems = localProducts.map((product) => {
-        if (product._id === cartInfo._id) {
-          return {
-            ...product,
-            quantity: product.quantity - 1,
-          };
-        }
-        return product;
-      });
-
-      window.localStorage.setItem("products", JSON.stringify(updateCartItems));
-    }
-  };
+  const { onRemove, incCartProduct, decCartProduct } = useStateContext();
 
   return (
     <div className="box flex items-start my-6">
@@ -80,7 +19,7 @@ const CartItem = ({ cartInfo }) => {
           <p className="flex items-center ">
             <span
               className="border-2 border-slate-400 px-2 py-1 text-red-600 text-xl font-bold cursor-pointer transition-colors hover:bg-red-600 hover:text-white"
-              onClick={decCRPRQnt}
+              onClick={() => decCartProduct(cartInfo)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +42,7 @@ const CartItem = ({ cartInfo }) => {
             </span>
             <span
               className="border-2 border-slate-400 px-2 py-1 text-red-600 text-xl font-bold cursor-pointer transition-colors hover:bg-red-600 hover:text-white"
-              onClick={incCRPRQnt}
+              onClick={() => incCartProduct(cartInfo)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

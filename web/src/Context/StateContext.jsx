@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 const Context = createContext();
@@ -19,18 +19,21 @@ const StateContext = ({ children }) => {
   const showCartSection = () => {
     setShowCart(!showCart);
   };
-  // inc Quantity
+
+  // increament Quantity
   const incQnt = () => {
     setQnt((prevQnt) => prevQnt + 1);
   };
-  // dec Quantity
+
+  // decreament Quantity
   const decQnt = () => {
     setQnt((prevQnt) => {
       if (prevQnt - 1 < 1) return 1;
       return prevQnt - 1;
     });
   };
-  // Adding item to the cart
+
+  // Adding item to the cart && to the localStorage
   const onAdd = (product, quantity) => {
     const checkProductInCart = localProducts.find(
       (item) => item._id === product._id
@@ -49,7 +52,7 @@ const StateContext = ({ children }) => {
       );
       return prevTotalQnt + quantity;
     });
-    //
+    // the product exist update the quantity
     if (checkProductInCart) {
       const updateCartItems = localProducts.map((cartProduct) => {
         if (cartProduct._id === product._id) {
@@ -64,6 +67,7 @@ const StateContext = ({ children }) => {
 
       setCartItems(updateCartItems);
       window.localStorage.setItem("products", JSON.stringify(updateCartItems));
+      // if the product is new then add to the list of product in the cart section
     } else {
       product.quantity = quantity;
       setCartItems([...cartItems, product]);
@@ -74,6 +78,7 @@ const StateContext = ({ children }) => {
     }
     toast.success(`${quantity} ${product.name} has add to the cart`);
   };
+
   // remove item from the cart
   const onRemove = (product) => {
     if (product) {
@@ -82,6 +87,7 @@ const StateContext = ({ children }) => {
           (item) => item._id !== product._id
         );
         setCartItems(deletedProduct);
+        window.localStorage.setItem("products", JSON.stringify(deletedProduct));
         setTotalQnt((prevQnt) => {
           window.localStorage.setItem(
             "total-qnt",
@@ -96,11 +102,68 @@ const StateContext = ({ children }) => {
           );
           return prevP - product.price * product.quantity;
         });
-        window.localStorage.setItem("products", JSON.stringify(deletedProduct));
       } else {
         setCartItems([]);
         window.localStorage.clear();
       }
+    }
+  };
+
+  // increament the product that exist in the cart
+  const incCartProduct = (cartInfo) => {
+    setTotalQnt((prevQ) => {
+      window.localStorage.setItem("total-qnt", Number(localTotalQnt) + 1);
+      return prevQ + 1;
+    });
+    setTotalPrice((prevP) => {
+      window.localStorage.setItem(
+        "total-price",
+        Number(localTotalPrice) + cartInfo.price
+      );
+      return prevP + cartInfo.price;
+    });
+
+    const updateCartItems = localProducts.map((product) => {
+      if (product._id === cartInfo._id) {
+        return {
+          ...product,
+          quantity: product.quantity + 1,
+        };
+      }
+      return product;
+    });
+
+    window.localStorage.setItem("products", JSON.stringify(updateCartItems));
+  };
+
+  // decreament the product that exict in the cart
+  const decCartProduct = (cartInfo) => {
+    if (cartInfo.quantity - 1 < 1) {
+      cartInfo.quantity = 1;
+    } else {
+      setTotalQnt((prevQ) => {
+        window.localStorage.setItem("total-qnt", Number(localTotalQnt) - 1);
+        return prevQ - 1;
+      });
+      setTotalPrice((prevP) => {
+        window.localStorage.setItem(
+          "total-price",
+          Number(localTotalPrice) - cartInfo.price
+        );
+        return prevP - cartInfo.price;
+      });
+      //
+      const updateCartItems = localProducts.map((product) => {
+        if (product._id === cartInfo._id) {
+          return {
+            ...product,
+            quantity: product.quantity - 1,
+          };
+        }
+        return product;
+      });
+
+      window.localStorage.setItem("products", JSON.stringify(updateCartItems));
     }
   };
 
@@ -116,11 +179,14 @@ const StateContext = ({ children }) => {
         setTotalPrice,
         setTotalQnt,
         setCartItems,
+        setShowCart,
         incQnt,
         decQnt,
         onAdd,
         showCartSection,
         onRemove,
+        incCartProduct,
+        decCartProduct,
       }}
     >
       {children}

@@ -20,8 +20,8 @@ const productType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'stripe_price',
-      title: 'Stripe_price',
+      name: 'category',
+      title: 'Category',
       type: 'string',
     }),
     defineField({

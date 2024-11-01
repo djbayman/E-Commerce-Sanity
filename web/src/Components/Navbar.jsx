@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
 import { useStateContext } from "../Context/StateContext";
-import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { showCartSection } = useStateContext();
-  // const [itemsLength, setItemsLength] = useState(0);
-
   const localTotalQnt = window.localStorage.getItem("total-qnt") || 0;
 
   return (
     <div className="bg-regal-blue ">
-      <nav className="flex items-center justify-between mx-auto w-11/12	py-4">
+      <nav
+        className="flex items-center justify-between mx-auto 	py-4"
+        style={{ width: "91%" }}
+      >
         <Link to="/">
           <h1 className="text-3xl font-bold text-[#088178]">Buy-Li</h1>
         </Link>
-        <span className=" relative">
+        <span className=" relative" role="button">
           <span
             className="absolute -top-1 -right-2 z-10 bg-red-600 text-white text-xs font-semibold w-5 h-5 rounded-full text-center cursor-pointer"
             style={{ lineHeight: "20px" }}

@@ -5,7 +5,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-.videoInsert {
+/* .videoInsert {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -13,10 +13,14 @@ body {
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
-  background-size: cover;
+  /* z-index: -100; */
+/* background-size: cover;
   overflow: hidden;
   z-index: 1;
+} */
+video {
+  /* max-width: none !important; */
+  object-fit: fill;
 }
 
 @keyframes slide {
@@ -48,4 +52,15 @@ body {
 .slide-container:after {
   right: 0;
   background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+}
+
+@media (max-width: 640px) {
+  .cart-pr-cont {
+    height: calc(50vh - 6vh);
+  }
+}
+@media (min-width: 641px) {
+  .cart-pr-cont {
+    height: calc(100vh - 8vh);
+  }
 }

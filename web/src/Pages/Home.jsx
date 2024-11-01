@@ -14,6 +14,7 @@ const Home = () => {
     fetchProductsData,
   } = useSanity();
 
+  // fetching Banner && Products Data
   useEffect(() => {
     fetchBannarData();
     fetchProductsData();
