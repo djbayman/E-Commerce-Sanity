@@ -5,7 +5,11 @@ const path = require("path");
 
 const app = express();
 app.use(cors({ origin: "http://localhost:3000" }));
-app.use(cors({ origin: "https://buyliecomm.vercel.app" }));
+app.use(
+  cors({
+    origin: "https://buyliecomm-18y9k2c4o-aymanes-projects-27be667b.vercel.app",
+  })
+);
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "web/build")));
