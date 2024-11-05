@@ -9,14 +9,13 @@ const CartSection = () => {
   const localTotalPrice = window.localStorage.getItem("total-price");
   const localTotalQnt = window.localStorage.getItem("total-qnt");
 
-  // click on the pay button and it will direct you to the stripe session
   const handleCheckout = async () => {
     // public stripe key
     const stripe = await loadStripe(
       `pk_test_51Q6HbuP0AY2wiLcKI5jwLwuxH37FopYYKeqhCo4q5wX7d1z1yRgg97Xd3yd7a8xuV74KJffKwCiqf1sfmMfergOg007wamTMS1`
     );
     const response = await fetch(
-      `${process.env.DEPLOY_URL}/create-checkout-session`,
+      `${process.env.REACT_APP_DEPLOY_WEB_URL}/create-checkout-session`,
       {
         method: "POST",
         headers: {
