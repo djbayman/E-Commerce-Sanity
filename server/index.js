@@ -1,11 +1,13 @@
 const express = require("express");
 var cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
+const path = require("path");
 
 const app = express();
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.static("public"));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "web/build")));
 
 app.post("/create-checkout-session", async (req, res) => {
   const { items } = req.body;
