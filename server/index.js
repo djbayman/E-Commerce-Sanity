@@ -5,14 +5,19 @@ const path = require("path");
 
 const PORT = process.env.DEPLOY_URL || 4000;
 
+app.use(
+  cors({
+    origin: "*", // Allow all origins (for testing only)
+  })
+);
+
 // Specify allowed origins
-const allowedOrigins = [
-  "http://localhost:3000", // Local frontend
-  PORT, // Vercel URL
-];
+// const allowedOrigins = [
+//   "http://localhost:3000", // Local frontend
+//   PORT, // Vercel URL
+// ];
 
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" }));
 app.use(
   cors({
     origin: allowedOrigins,
