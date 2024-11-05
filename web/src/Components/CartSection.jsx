@@ -16,7 +16,7 @@ const CartSection = () => {
       `pk_test_51Q6HbuP0AY2wiLcKI5jwLwuxH37FopYYKeqhCo4q5wX7d1z1yRgg97Xd3yd7a8xuV74KJffKwCiqf1sfmMfergOg007wamTMS1`
     );
     const response = await fetch(
-      "http://localhost:4000/create-checkout-session",
+      `${process.env.DEPLOY_URL}/create-checkout-session`,
       {
         method: "POST",
         headers: {
