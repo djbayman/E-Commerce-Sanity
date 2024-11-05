@@ -3,11 +3,19 @@ var cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 const path = require("path");
 
+const PORT = process.env.DEPLOY_URL || 4000;
+
+// Specify allowed origins
+const allowedOrigins = [
+  "http://localhost:3000", // Local frontend
+  PORT, // Vercel URL
+];
+
 const app = express();
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(
   cors({
-    origin: process.env.DEPLOY_URL,
+    origin: allowedOrigins,
   })
 );
 app.use(express.static("public"));
@@ -53,4 +61,4 @@ app.post("/create-checkout-session", async (req, res) => {
   res.json({ id: session.id });
 });
 
-app.listen(4000, () => console.log("Running on port 4000"));
+app.listen(PORT, () => console.log("Running on port 4000"));
